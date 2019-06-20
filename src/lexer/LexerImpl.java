@@ -1,7 +1,7 @@
 package lexer;
 
 import dictionary.Dictionary;
-import parser.Observer;
+import observer.Observer;
 import reader.Word;
 import reader.WordReader;
 

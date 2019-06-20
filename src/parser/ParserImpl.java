@@ -2,6 +2,7 @@ package parser;
 
 import lexer.Lexer;
 import lexer.Token;
+import observer.Observer;
 
 import java.util.List;
 

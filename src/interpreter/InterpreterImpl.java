@@ -1,6 +1,6 @@
 package interpreter;
 
-import parser.Observer;
+import observer.Observer;
 import parser.Parser;
 
 public class InterpreterImpl implements Observer, Interpreter {

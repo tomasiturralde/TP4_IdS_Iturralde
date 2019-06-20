@@ -1,7 +1,7 @@
 import dictionary.NumberHandler;
 import lexer.LexerImpl;
 import lexer.ObservableLexer;
-import parser.Observer;
+import observer.Observer;
 import parser.ParserImpl;
 import reader.StringWordReader;
 
