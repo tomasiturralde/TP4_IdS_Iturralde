@@ -9,9 +9,9 @@ public class State {
     private boolean acceptance;
     private List<Transition> transitions;
 
-    public State(boolean acceptance, List<Transition> transitions) {
+    State(boolean acceptance) {
         this.acceptance = acceptance;
-        this.transitions = transitions;
+        this.transitions = new ArrayList<>();
     }
 
     public boolean isAcceptance() {
@@ -22,31 +22,20 @@ public class State {
         return transitions;
     }
 
+    public void setTransition(Transition transitions) {
+        this.transitions.add(transitions);
+    }
+
     public void goTo(Token token, ParserImpl parser) {
-        List<Transition> temp = new ArrayList<>();
+        boolean pathNotFound = true;
         for (Transition transition : transitions) {
-            if (token.getType().equals(transition.getType()))
-                temp.add(transition);
-        }
-        if (temp.size() > 1) {
-            for (Transition transition : temp) {
-                if (token.getText().equals(transition.getText())) {
-                    // TODO: Add a node to the tree
-                    parser.setCurrentState(transition.getStateTo());
-                }
-            }
-            throw new RuntimeException("Invalid transition");
-        }
-        else if (temp.size() == 1) {
-            // TODO: Add a node to the tree
-            parser.setCurrentState(temp.get(0).getStateTo());
-        }
-        else {
-            if (acceptance) {
-                // TODO: Finish tree, add it to parser
-            } else {
-                throw new RuntimeException("Invalid transition");
+            if (token.getType().matches(transition.getType()) && token.getText().matches(transition.getText())){
+                // TODO: Add a node to the tree
+                parser.setCurrentState(transition.getStateTo());
+                pathNotFound = false;
             }
         }
+        if (pathNotFound)
+            throw new RuntimeException("Invalid transitions");
     }
 }
