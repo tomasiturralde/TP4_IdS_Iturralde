@@ -49,7 +49,7 @@ public class StringWordReader implements WordReader {
             }
 
             //if char is a letter
-            if (Character.isAlphabetic(input.charAt(charCount))) {
+            if (!charIsSeparator(input.charAt(charCount)) && input.charAt(charCount) != ' ') {
                 temp.append(input.charAt(charCount++));
             }
 
