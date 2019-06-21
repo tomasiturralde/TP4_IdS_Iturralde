@@ -42,7 +42,9 @@ public class LexerImpl implements ObservableLexer {
         String type = dictionary.checkType(nextWord.getText());
         Token newToken = new Token(nextWord.getLine(), nextWord.getText().length(),
                 nextWord.getStartingPosition(), type, nextWord.getText());
-        System.out.println(newToken.toString());
+        if (newToken.getType().matches("Error")) {
+            System.out.println("Error with token:" + newToken.getText() + ", at (" + newToken.getLine() + ", " + newToken.getStartingPosition() + ")");
+        }
         setToken(newToken);
     }
 }
