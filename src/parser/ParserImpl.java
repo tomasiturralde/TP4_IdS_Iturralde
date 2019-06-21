@@ -21,10 +21,10 @@ public class ParserImpl implements Observer, ObservableParser {
 
     @Override
     public void update() {
-//        Token token = lexer.getToken();
-//        currentState.goTo(token, this);
-//        if (!currentState.isAcceptance())
-//            lexer.readNext();
+        Token token = lexer.getToken();
+        currentState.goTo(token, this);
+        if (!currentState.isAcceptance())
+            lexer.readNext();
     }
 
     public void setLexer(Lexer lexer) {
