@@ -1,4 +1,6 @@
 import dictionary.Handler;
+import interpreter.Interpreter;
+import interpreter.InterpreterImpl;
 import lexer.LexerImpl;
 import lexer.ObservableLexer;
 import observer.Observer;
@@ -23,10 +25,28 @@ public class Main {
         for (String line : lines) {
             factory.createStates(line);
         }
-        ParserImpl parser = new ParserImpl(factory.getStartingState());
+
+        InterpreterImpl interpreter = new InterpreterImpl();
+        List<Observer> obs = new ArrayList<>();
+        obs.add(interpreter);
+
+        Handler emptyHandler = new Handler(null, ".*", "");
+        Handler idHandler = new Handler(emptyHandler, "_?[a-zA-Z]+[a-zA-Z0-9]*", "IDENTIFIER");
+        Handler vartypeHandler = new Handler(idHandler, "string|number", "VARTYPE");
+        Handler literalHandler = new Handler(vartypeHandler, "'.+'|\".+\"|[0-9]+[.]?[0-9]*", "LITERAL");
+        Handler factorHandler = new Handler(literalHandler, "LITERAL|(EXP)|IDENTIFIER", "FACTOR");
+        Handler termHandler = new Handler(factorHandler, "TERM[*]FACTOR|TERM/FACTOR|FACTOR", "TERM");
+        Handler expHandler = new Handler(termHandler, "EXP[+]TERM|EXP-TERM|TERM", "EXP");
+        Handler reassignHandler = new Handler(expHandler, "ID=EXP", "REASSIGN");
+        Handler printHandler = new Handler(reassignHandler, "print(EXP)", "PRINT");
+        Handler assignHandler = new Handler(printHandler, "letID:VARTYPE(=EXP)?", "ASSIGN");
+        Handler statementHandler = new Handler(assignHandler, "ASSIGN|PRINT|REASSIGN", "STATEMENT");
+        Handler lineHandler = new Handler(statementHandler, "STATEMENT;", "LINE");
+
+        ParserImpl parser = new ParserImpl(factory.getStartingState(), obs, lineHandler);
         List<Observer> observers = new ArrayList<>();
         observers.add(parser);
-        StringWordReader reader = new StringWordReader("let x: string = \"hello world\";\nlet y: number = 5.42a + 2;\nprint('henlo world');");
+        StringWordReader reader = new StringWordReader("let x: number = 5 + 3 * 2;\nx = 4 * 2 + 1;\nprint(x);");
 
         Handler errorHandler = new Handler(null, ".*", "Error");
         Handler identifierHandler = new Handler(errorHandler, "_?[a-zA-Z]+[a-zA-Z0-9]*", "Identifier");

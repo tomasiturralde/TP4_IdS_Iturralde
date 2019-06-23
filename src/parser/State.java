@@ -14,7 +14,7 @@ public class State {
         this.transitions = new ArrayList<>();
     }
 
-    public boolean isAcceptance() {
+    boolean isAcceptance() {
         return acceptance;
     }
 
@@ -22,20 +22,20 @@ public class State {
         return transitions;
     }
 
-    public void setTransition(Transition transitions) {
-        this.transitions.add(transitions);
+    void setTransition(Transition transition) {
+        transitions.add(transition);
     }
 
-    public void goTo(Token token, ParserImpl parser) {
+    void goTo(Token token, ParserImpl parser) {
         boolean pathNotFound = true;
         for (Transition transition : transitions) {
             if (token.getType().matches(transition.getType()) && token.getText().matches(transition.getText())){
-                // TODO: Add a node to the tree
+                parser.addToken(token);
                 parser.setCurrentState(transition.getStateTo());
                 pathNotFound = false;
             }
         }
         if (pathNotFound)
-            throw new RuntimeException("Invalid transitions");
+            throw new RuntimeException("No transition found");
     }
 }
