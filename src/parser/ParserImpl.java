@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-
 public class ParserImpl implements Observer, ObservableParser {
     private State startingState;
     private State currentState;
@@ -73,11 +72,10 @@ public class ParserImpl implements Observer, ObservableParser {
             }
             else if (readTokens.get(i).getType().matches("Keyword|Separator")) {
                 handler.generateBasicNode(nodes, readTokens.get(i), readTokens.get(i).getText());
-                if (readTokens.get(i).getText().matches("=|[(]")) {
-                    readTokens.remove(i);
+                Token token = readTokens.remove(i);
+                if (token.getText().matches("=|[(]")) {
                     break;
                 }
-                readTokens.remove(i);
             }
         }
 

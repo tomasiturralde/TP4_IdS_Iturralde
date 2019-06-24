@@ -24,20 +24,12 @@ public class StringWordReader implements WordReader {
 
             //if input is starting a string with ""
             if (input.charAt(charCount) == '"') {
-                temp.append(input.charAt(charCount++));
-                while (charCount < input.length() && input.charAt(charCount) != '"') {
-                    temp.append(input.charAt(charCount++));
-                }
-                temp.append(input.charAt(charCount++));
+                createStringWord(temp, '"');
             }
 
             //if input is starting a string with ''
             else if (input.charAt(charCount) == '\'') {
-                temp.append(input.charAt(charCount++));
-                while (charCount < input.length() && input.charAt(charCount) != '\'') {
-                    temp.append(input.charAt(charCount++));
-                }
-                temp.append(input.charAt(charCount++));
+                createStringWord(temp, '\'');
             }
 
             //if char is an enter, add one to line counter
@@ -81,6 +73,14 @@ public class StringWordReader implements WordReader {
         }
         startingPosition += temp.length();
         return new Word(lineCount, currentStart, temp.toString());
+    }
+
+    private void createStringWord(StringBuilder temp, char c) {
+        temp.append(input.charAt(charCount++));
+        while (charCount < input.length() && input.charAt(charCount) != c) {
+            temp.append(input.charAt(charCount++));
+        }
+        temp.append(input.charAt(charCount++));
     }
 
     @Override

@@ -2,7 +2,6 @@ package parser;
 
 import dictionary.Dictionary;
 import lexer.Token;
-
 import java.util.List;
 import java.util.Stack;
 

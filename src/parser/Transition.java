@@ -1,25 +1,25 @@
 package parser;
 
-public class Transition {
+class Transition {
     private String type;
     private String text;
     private State stateTo;
 
-    public Transition(String type, String text, State stateTo) {
+    Transition(String type, String text, State stateTo) {
         this.type = type;
         this.text = text;
         this.stateTo = stateTo;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public String getText() {
+    String getText() {
         return text;
     }
 
-    public State getStateTo() {
+    State getStateTo() {
         return stateTo;
     }
 }

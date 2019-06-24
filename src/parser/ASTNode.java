@@ -33,10 +33,6 @@ class ASTNode {
         subNodes.add(subNode);
     }
 
-    void setSubNodes(List<ASTNode> subNodes) {
-        this.subNodes = subNodes;
-    }
-
     ASTNode getLastNode() {
         return subNodes.get(subNodes.size()-1);
     }
