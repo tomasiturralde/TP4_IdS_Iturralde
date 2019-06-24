@@ -24,16 +24,21 @@ public class ParserImpl implements Observer, ObservableParser {
         this.observers = observers;
         readTokens = new ArrayList<>();
         handler = new NodeHandler(dictionary);
+        root = new ASTNode(null);
+        root.setType("PROGRAM");
     }
 
     @Override
     public void update() {
         Token token = lexer.getToken();
-        currentState.goTo(token, this);
-        if (!currentState.isAcceptance())
+        if (token != null) {
+            currentState.goTo(token, this);
+            if (currentState.isAcceptance())
+                parseList();
             lexer.readNext();
-        else
-            parseList();
+        } else {
+            notifyObservers();
+        }
     }
 
     public void setLexer(Lexer lexer) {
@@ -87,13 +92,12 @@ public class ParserImpl implements Observer, ObservableParser {
         }
 
         returnToBeginning();
-        setRootNode(handler.createRootNode(nodes));
+        setRootNode(handler.createLineNode(nodes));
     }
 
     @Override
     public void setRootNode(ASTNode node) {
-        root = node;
-        notifyObservers();
+        root.addSubNode(node);
     }
 
     @Override

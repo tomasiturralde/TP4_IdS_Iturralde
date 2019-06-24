@@ -52,7 +52,7 @@ class NodeHandler {
         nodes.push(currentNode);
     }
 
-    ASTNode createRootNode(Stack<ASTNode> nodes) {
+    ASTNode createLineNode(Stack<ASTNode> nodes) {
         StringBuilder text = new StringBuilder();
         ASTNode root;
         while (true) {

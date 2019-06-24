@@ -38,13 +38,18 @@ public class LexerImpl implements ObservableLexer {
 
     @Override
     public void readNext() {
-        Word nextWord = wordReader.read();
-        String type = dictionary.checkType(nextWord.getText());
-        Token newToken = new Token(nextWord.getLine(), nextWord.getText().length(),
-                nextWord.getStartingPosition(), type, nextWord.getText());
-        if (newToken.getType().matches("Error")) {
-            System.out.println("Error with token:" + newToken.getText() + ", at (" + newToken.getLine() + ", " + newToken.getStartingPosition() + ")");
+        if (!wordReader.reachedEnd()) {
+            Word nextWord = wordReader.read();
+            String type = dictionary.checkType(nextWord.getText());
+            Token newToken = new Token(nextWord.getLine(), nextWord.getText().length(),
+                    nextWord.getStartingPosition(), type, nextWord.getText());
+            if (newToken.getType().matches("Error")) {
+                System.out.println("Error with token:" + newToken.getText() + ", at (" + newToken.getLine() + ", " + newToken.getStartingPosition() + ")");
+            }
+            setToken(newToken);
         }
-        setToken(newToken);
+        else {
+            setToken(null);
+        }
     }
 }
