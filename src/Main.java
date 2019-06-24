@@ -35,6 +35,7 @@ public class Main {
         Handler lineHandler = new Handler(assignHandler, "ASSIGN|PRINT|REASSIGN", "LINE");
 
         ParserImpl parser = new ParserImpl(factory.getStartingState(), obs, lineHandler);
+        interpreter.setParser(parser);
         List<Observer> observers = new ArrayList<>();
         observers.add(parser);
         StringWordReader reader = new StringWordReader("let x: number = 3 * y + 'hola';\nx = 4 - 2 + 1;\nprint(x);");

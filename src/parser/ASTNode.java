@@ -5,7 +5,7 @@ import lexer.Token;
 import java.util.ArrayList;
 import java.util.List;
 
-class ASTNode {
+public class ASTNode {
     private List<ASTNode> subNodes;
     private Token token;
     private String type;
