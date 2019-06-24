@@ -5,7 +5,7 @@ import lexer.Token;
 import java.util.ArrayList;
 import java.util.List;
 
-public class State {
+class State {
     private boolean acceptance;
     private List<Transition> transitions;
 
@@ -18,10 +18,6 @@ public class State {
         return acceptance;
     }
 
-    public List<Transition> getTransitions() {
-        return transitions;
-    }
-
     void setTransition(Transition transition) {
         transitions.add(transition);
     }
@@ -29,7 +25,7 @@ public class State {
     void goTo(Token token, ParserImpl parser) {
         boolean pathNotFound = true;
         for (Transition transition : transitions) {
-            if (token.getType().matches(transition.getType()) && token.getText().matches(transition.getText())){
+            if (token.getType().matches(transition.getType()) && (token.getText().equals(transition.getText()) || token.getText().matches(transition.getText()))){
                 parser.addToken(token);
                 parser.setCurrentState(transition.getStateTo());
                 pathNotFound = false;

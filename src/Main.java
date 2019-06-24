@@ -1,5 +1,4 @@
 import dictionary.Handler;
-import interpreter.Interpreter;
 import interpreter.InterpreterImpl;
 import lexer.LexerImpl;
 import lexer.ObservableLexer;
@@ -15,7 +14,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
         LineFileReader lineReader = new LineFileReader();
         lineReader.initialize("C:\\Users\\tomy\\IdeaProjects\\TP4_IdS_Iturralde\\src\\acceptedLines.txt");
         lineReader.readLines();
@@ -31,22 +29,15 @@ public class Main {
         obs.add(interpreter);
 
         Handler emptyHandler = new Handler(null, ".*", "");
-        Handler idHandler = new Handler(emptyHandler, "_?[a-zA-Z]+[a-zA-Z0-9]*", "IDENTIFIER");
-        Handler vartypeHandler = new Handler(idHandler, "string|number", "VARTYPE");
-        Handler literalHandler = new Handler(vartypeHandler, "'.+'|\".+\"|[0-9]+[.]?[0-9]*", "LITERAL");
-        Handler factorHandler = new Handler(literalHandler, "LITERAL|(EXP)|IDENTIFIER", "FACTOR");
-        Handler termHandler = new Handler(factorHandler, "TERM[*]FACTOR|TERM/FACTOR|FACTOR", "TERM");
-        Handler expHandler = new Handler(termHandler, "EXP[+]TERM|EXP-TERM|TERM", "EXP");
-        Handler reassignHandler = new Handler(expHandler, "ID=EXP", "REASSIGN");
-        Handler printHandler = new Handler(reassignHandler, "print(EXP)", "PRINT");
-        Handler assignHandler = new Handler(printHandler, "letID:VARTYPE(=EXP)?", "ASSIGN");
-        Handler statementHandler = new Handler(assignHandler, "ASSIGN|PRINT|REASSIGN", "STATEMENT");
-        Handler lineHandler = new Handler(statementHandler, "STATEMENT;", "LINE");
+        Handler reassignHandler = new Handler(emptyHandler, "IDENTIFIER=EXP;", "REASSIGN");
+        Handler printHandler = new Handler(reassignHandler, "print[(]EXP[)];", "PRINT");
+        Handler assignHandler = new Handler(printHandler, "letIDENTIFIER:VARTYPE(=EXP)?;", "ASSIGN");
+        Handler lineHandler = new Handler(assignHandler, "ASSIGN|PRINT|REASSIGN", "LINE");
 
         ParserImpl parser = new ParserImpl(factory.getStartingState(), obs, lineHandler);
         List<Observer> observers = new ArrayList<>();
         observers.add(parser);
-        StringWordReader reader = new StringWordReader("let x: number = 5 + 3 * 2;\nx = 4 * 2 + 1;\nprint(x);");
+        StringWordReader reader = new StringWordReader("let x: number = 3 * y + 'hola';\nx = 4 - 2 + 1;\nprint(x);");
 
         Handler errorHandler = new Handler(null, ".*", "Error");
         Handler identifierHandler = new Handler(errorHandler, "_?[a-zA-Z]+[a-zA-Z0-9]*", "Identifier");
