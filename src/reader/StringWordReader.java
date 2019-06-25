@@ -39,8 +39,8 @@ public class StringWordReader implements WordReader {
                 continue;
             }
 
-            //if char is a letter
-            if (!charIsSeparator(input.charAt(charCount)) && input.charAt(charCount) != ' ') {
+            //if char is a letter/number/dot
+            if (Character.isLetterOrDigit(input.charAt(charCount)) || input.charAt(charCount) == '.') {
                 temp.append(input.charAt(charCount++));
             }
 
