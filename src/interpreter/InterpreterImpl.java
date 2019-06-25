@@ -1,7 +1,6 @@
 package interpreter;
 
 import parser.ASTNode;
-
 import java.util.ArrayList;
 import java.util.List;
 

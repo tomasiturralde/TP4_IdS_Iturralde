@@ -1,7 +1,5 @@
 package reader;
 
-import java.util.regex.Pattern;
-
 public class StringWordReader implements WordReader {
     private String input;
     private int charCount;
@@ -91,6 +89,6 @@ public class StringWordReader implements WordReader {
 
     private boolean charIsSeparator(char input) {
         String temp = "" + input;
-        return Pattern.matches("[=;:()+*/-]", temp);
+        return temp.matches("[=;:()+*/-]");
     }
 }

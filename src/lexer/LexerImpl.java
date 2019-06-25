@@ -3,7 +3,6 @@ package lexer;
 import dictionary.Dictionary;
 import reader.Word;
 import reader.WordReader;
-
 import java.util.ArrayList;
 import java.util.List;
 
