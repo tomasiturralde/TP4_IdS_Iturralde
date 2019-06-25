@@ -1,6 +1,6 @@
 package interpreter;
 
-public class Value {
+class Value {
     private String type;
     private Object term;
 
@@ -9,15 +9,15 @@ public class Value {
         term = null;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    void setType(String type) {
         this.type = type;
     }
 
-    public Object getTerm() {
+    Object getTerm() {
         return term;
     }
 

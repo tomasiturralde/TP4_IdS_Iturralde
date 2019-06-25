@@ -13,7 +13,7 @@ class Variable {
         return id;
     }
 
-    public Value getValue() {
+    Value getValue() {
         return value;
     }
 
@@ -21,7 +21,7 @@ class Variable {
         this.id = id;
     }
 
-    public void setValue(Value value) {
+    void setValue(Value value) {
         this.value = value;
     }
 }

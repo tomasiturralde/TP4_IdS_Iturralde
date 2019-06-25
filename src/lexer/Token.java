@@ -13,11 +13,11 @@ public class Token {
         this.text = text;
     }
 
-    public int getLine() {
+    int getLine() {
         return line;
     }
 
-    public int getStartingPosition() {
+    int getStartingPosition() {
         return startingPosition;
     }
 
