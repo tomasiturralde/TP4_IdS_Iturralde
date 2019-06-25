@@ -30,7 +30,7 @@ class NodeHandler {
             String[] precedence = {"+", "-", "*", "/"};
 
             outerLoop: for (String s : precedence) {
-                for (i = 0; i < tokens.size(); i++) {
+                for (i = tokens.size()-1; i >= 0; i--) {
                     if (tokens.get(i).getText().equals(s)) {
                         break outerLoop;
                     }
