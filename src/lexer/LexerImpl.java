@@ -23,7 +23,7 @@ public class LexerImpl implements Lexer {
             String type = dictionary.checkType(nextWord.getText());
             Token newToken = new Token(nextWord.getLine(), nextWord.getStartingPosition(), type, nextWord.getText());
             if (newToken.getType().matches("Error")) {
-                System.out.println("Error with tokens:" + newToken.getText() + ", at (" + newToken.getLine() + ", " + newToken.getStartingPosition() + ")");
+                throw new RuntimeException("Error with tokens:" + newToken.getText() + ", at (" + newToken.getLine() + ", " + newToken.getStartingPosition() + ")");
             }
             tokens.add(newToken);
         }

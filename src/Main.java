@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        String code = "let x: string;" +
+        String code = "let x: string;\n" +
                 "x = 'aloha';\n" +
                 "print(x);\n" +
                 "x = \"alo\" + 'hola';\n" +
