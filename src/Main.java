@@ -19,7 +19,7 @@ public class Main {
                 "print(x);\n" +
                 "x = \"alo\" + 'hola';\n" +
                 "print(x);\n" +
-                "x = 4 + 3 * 2 + 'hola' + 5 * 3 + 2 + x;\n" +
+                "x = 4 + 3 * 2 + 'hola' + 5 * 3 + 2 - 1 / 5 + x;\n" +
                 "print(x);\n" +
                 "let y: number = 5 - 4 - 3;\n" +
                 "print(y);\n" +
