@@ -1,5 +1,3 @@
-package reader;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,15 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineFileReader {
+class LineFileReader {
     private BufferedReader reader;
     private List<String> lines;
 
-    public LineFileReader() {
+    LineFileReader() {
         lines = new ArrayList<>();
     }
 
-    public void initialize(String filePath) {
+    void initialize(String filePath) {
         try {
             reader = new BufferedReader(new FileReader(filePath));
         } catch (FileNotFoundException e) {
@@ -23,11 +21,11 @@ public class LineFileReader {
         }
     }
 
-    public List<String> getLines() {
+    List<String> getLines() {
         return lines;
     }
 
-    public void readLines() {
+    void readLines() {
         try {
             String line = reader.readLine();
 

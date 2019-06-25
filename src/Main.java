@@ -8,7 +8,6 @@ import lexer.LexerImpl;
 import parser.Parser;
 import parser.ParserImpl;
 import parser.StateFactory;
-import reader.LineFileReader;
 import reader.StringWordReader;
 import java.util.List;
 
