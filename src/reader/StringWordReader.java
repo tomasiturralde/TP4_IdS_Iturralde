@@ -38,6 +38,7 @@ public class StringWordReader implements WordReader {
                 startingPosition = 0;
                 currentStart = 0;
                 charCount += 1;
+                continue;
             }
 
             //if char is a letter

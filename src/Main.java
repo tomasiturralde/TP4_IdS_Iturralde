@@ -1,7 +1,7 @@
 import dictionary.Handler;
 import interpreter.InterpreterImpl;
+import lexer.Lexer;
 import lexer.LexerImpl;
-import lexer.ObservableLexer;
 import observer.Observer;
 import parser.ParserImpl;
 import parser.StateFactory;
@@ -14,15 +14,22 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        String code = "let x: string;" +
+                "x = 'aloha';\n" +
+                "print(x);\n" +
+                "x = \"alo\" + 'hola';\n" +
+                "print(x);\n" +
+                "x = 4 + 3 * 2 + 'hola' + 5 + x;\n" +
+                "print(x);\n" +
+                "print(5 + ', ' + x);";
+
         LineFileReader lineReader = new LineFileReader();
         lineReader.initialize("C:\\Users\\tomy\\IdeaProjects\\TP4_IdS_Iturralde\\src\\acceptedLines.txt");
         lineReader.readLines();
         List<String> lines = lineReader.getLines();
 
         StateFactory factory = new StateFactory();
-        for (String line : lines) {
-            factory.createStates(line);
-        }
+        lines.forEach(factory::createStates);
 
         InterpreterImpl interpreter = new InterpreterImpl();
         List<Observer> obs = new ArrayList<>();
@@ -32,13 +39,12 @@ public class Main {
         Handler reassignHandler = new Handler(emptyHandler, "IDENTIFIER=EXP;", "REASSIGN");
         Handler printHandler = new Handler(reassignHandler, "print[(]EXP[)];", "PRINT");
         Handler assignHandler = new Handler(printHandler, "letIDENTIFIER:VARTYPE(=EXP)?;", "ASSIGN");
-        Handler lineHandler = new Handler(assignHandler, "ASSIGN|PRINT|REASSIGN", "LINE");
 
-        ParserImpl parser = new ParserImpl(factory.getStartingState(), obs, lineHandler);
+        ParserImpl parser = new ParserImpl(factory.getStartingState(), obs, assignHandler);
         interpreter.setParser(parser);
         List<Observer> observers = new ArrayList<>();
         observers.add(parser);
-        StringWordReader reader = new StringWordReader("let x: number = 3 * y + 'hola';\nx = 4 - 2 + 1;\nprint(x);");
+        StringWordReader reader = new StringWordReader(code);
 
         Handler errorHandler = new Handler(null, ".*", "Error");
         Handler identifierHandler = new Handler(errorHandler, "_?[a-zA-Z]+[a-zA-Z0-9]*", "Identifier");
@@ -49,13 +55,10 @@ public class Main {
         Handler operatorHandler = new Handler(separatorHandler, "[+*/-]", "Operator");
         Handler numberHandler = new Handler(operatorHandler, "[0-9]+[.]?[0-9]*", "Number");
 
-        ObservableLexer lexer = new LexerImpl(observers, reader, numberHandler);
+        Lexer lexer = new LexerImpl(observers, reader, numberHandler);
 
         parser.setLexer(lexer);
 
-        while (!reader.reachedEnd()) {
-            lexer.readNext();
-            System.out.println();
-        }
+        interpreter.readASTTree();
     }
 }

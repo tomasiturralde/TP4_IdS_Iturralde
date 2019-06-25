@@ -17,15 +17,15 @@ public class ASTNode {
         subNodes = new ArrayList<>();
     }
 
-    List<ASTNode> getSubNodes() {
+    public List<ASTNode> getSubNodes() {
         return subNodes;
     }
 
-    Token getToken() {
+    public Token getToken() {
         return token;
     }
 
-    String getType() {
+    public String getType() {
         return type;
     }
 
@@ -33,7 +33,7 @@ public class ASTNode {
         subNodes.add(subNode);
     }
 
-    ASTNode getLastNode() {
+    public ASTNode getLastNode() {
         return subNodes.get(subNodes.size()-1);
     }
 

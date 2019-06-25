@@ -73,17 +73,18 @@ public class ParserImpl implements Observer, ObservableParser {
             else if (readTokens.get(i).getType().matches("Keyword|Separator")) {
                 handler.generateBasicNode(nodes, readTokens.get(i), readTokens.get(i).getText());
                 Token token = readTokens.remove(i);
-                if (token.getText().matches("=|[(]")) {
+                if (token.getText().matches("=|[(]|;")) {
                     break;
                 }
             }
         }
 
-        while (!readTokens.get(i).getType().equals("Separator")) {
-            expressionTokens.add(readTokens.remove(i));
+        if (!readTokens.isEmpty()) {
+            while (!readTokens.get(i).getType().equals("Separator")) {
+                expressionTokens.add(readTokens.remove(i));
+            }
+            nodes.push(handler.parseExpression(expressionTokens));
         }
-
-        nodes.push(handler.parseExpression(expressionTokens));
         while (!readTokens.isEmpty()) {
             handler.generateBasicNode(nodes, readTokens.get(i), readTokens.get(i).getText());
             readTokens.remove(i);
