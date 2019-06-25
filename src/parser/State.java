@@ -26,7 +26,6 @@ class State {
         boolean pathNotFound = true;
         for (Transition transition : transitions) {
             if (token.getType().matches(transition.getType()) && (token.getText().equals(transition.getText()) || token.getText().matches(transition.getText()))){
-                parser.addToken(token);
                 parser.setCurrentState(transition.getStateTo());
                 pathNotFound = false;
             }

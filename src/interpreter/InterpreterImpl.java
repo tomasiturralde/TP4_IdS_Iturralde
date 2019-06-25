@@ -1,35 +1,19 @@
 package interpreter;
 
-import observer.Observer;
 import parser.ASTNode;
-import parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterpreterImpl implements Observer, Interpreter {
-    private Parser parser;
+public class InterpreterImpl implements Interpreter {
     private List<Variable> variables;
 
     public InterpreterImpl() {
         variables = new ArrayList<>();
     }
 
-    public void setParser(Parser parser) {
-        this.parser = parser;
-    }
-
     @Override
-    public void update() {
-        runCode(parser.getRootNode());
-    }
-
-    @Override
-    public void readASTTree() {
-        parser.generateNextTree();
-    }
-
-    private void runCode(ASTNode root) {
+    public void readASTTree(ASTNode root) {
         List<ASTNode> lines = root.getSubNodes();
         for (ASTNode line : lines) {
             switch (line.getType()){

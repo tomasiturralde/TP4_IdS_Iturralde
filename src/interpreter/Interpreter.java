@@ -1,5 +1,7 @@
 package interpreter;
 
+import parser.ASTNode;
+
 public interface Interpreter {
-    void readASTTree();
+    void readASTTree(ASTNode root);
 }

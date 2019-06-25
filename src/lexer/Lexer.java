@@ -1,6 +1,7 @@
 package lexer;
 
+import java.util.List;
+
 public interface Lexer {
-    void readNext();
-    Token getToken();
+    List<Token> getTokens();
 }

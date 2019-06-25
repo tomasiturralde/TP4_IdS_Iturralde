@@ -1,6 +1,8 @@
 package parser;
 
+import lexer.Token;
+import java.util.List;
+
 public interface Parser {
-    ASTNode getRootNode();
-    void generateNextTree();
+    ASTNode generateTree(List<Token> tokens);
 }
